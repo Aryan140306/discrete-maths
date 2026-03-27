@@ -108,82 +108,61 @@ using namespace std;
 
 class RELATION {
 public:
-    int n, r[10][10];
+    int a[10][10], n;
 
     void input() {
-        cout << "Enter number of elements: ";
         cin >> n;
-        cout << "Enter relation matrix:\n";
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
-                cin >> r[i][j];
+                cin >> a[i][j];
     }
 
-    // Reflexive
-    bool isReflexive() {
+    bool reflexive() {
         for (int i = 0; i < n; i++)
-            if (r[i][i] != 1) return false;
+            if (a[i][i] != 1) return false;
         return true;
     }
 
-    // Symmetric
-    bool isSymmetric() {
+    bool symmetric() {
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
-                if (r[i][j] != r[j][i]) return false;
+                if (a[i][j] != a[j][i]) return false;
         return true;
     }
 
-    // Anti-Symmetric
-    bool isAntiSymmetric() {
+    bool antisymmetric() {
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
-                if (i != j && r[i][j] == 1 && r[j][i] == 1)
-                    return false;
+                if (i != j && a[i][j] && a[j][i]) return false;
         return true;
     }
 
-    // Transitive
-    bool isTransitive() {
+    bool transitive() {
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
-                if (r[i][j])
+                if (a[i][j])
                     for (int k = 0; k < n; k++)
-                        if (r[j][k] && !r[i][k])
-                            return false;
+                        if (a[j][k] && !a[i][k]) return false;
         return true;
     }
 
-    // Check relation type
-    void checkRelation() {
-        bool ref = isReflexive();
-        bool sym = isSymmetric();
-        bool anti = isAntiSymmetric();
-        bool trans = isTransitive();
+    void check() {
+        bool r = reflexive(), s = symmetric(), a = antisymmetric(), t = transitive();
 
-        if (ref && sym && trans)
-            cout << "Relation is Equivalence\n";
-        else if (ref && anti && trans)
-            cout << "Relation is Partial Order\n";
-        else
-            cout << "Relation is None\n";
+        if (r && s && t) cout << "Equivalence";
+        else if (r && a && t) cout << "Partial Order";
+        else cout << "None";
     }
 };
 
 int main() {
     RELATION R;
     R.input();
-
-    cout << "\nReflexive: " << (R.isReflexive() ? "Yes" : "No");
-    cout << "\nSymmetric: " << (R.isSymmetric() ? "Yes" : "No");
-    cout << "\nAnti-Symmetric: " << (R.isAntiSymmetric() ? "Yes" : "No");
-    cout << "\nTransitive: " << (R.isTransitive() ? "Yes" : "No");
-
-    cout << "\n\nResult: ";
-    R.checkRelation();
-
+    R.check();
     return 0;
 }
+           
+
 # practical 3
 #include <iostream>
 using namespace std;
